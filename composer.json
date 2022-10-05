@@ -7,10 +7,14 @@
     "require": {
         "php": "^8.0.2",
         "bezhansalleh/filament-shield": "^2.2",
+        "doctrine/dbal": "^3.4",
         "filament/filament": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
+        "laravel/tinker": "^2.7",
+        "spatie/laravel-activitylog": "^4.6",
+        "z3d0x/filament-logger": "^0.4.0"
         "laravel/tinker": "^2.7",
         "saade/filament-laravel-log": "^1.1"
     },
