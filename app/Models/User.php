@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'email_verified_at',
         'password',
     ];
 
@@ -42,4 +43,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Helpers
+    public function isSuperAdmin(): bool
+    {
+        return $this->hasRole(config('filament-shield.super_admin.name'));
+    }
+
+    public function isUser(): bool
+    {
+        return $this->hasRole(config('filament-shield.filament_user.name'));
+    }
 }
