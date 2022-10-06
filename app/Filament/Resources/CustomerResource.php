@@ -3,15 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CustomerResource\Pages;
-use App\Filament\Resources\CustomerResource\RelationManagers;
 use App\Models\Customer;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Model;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class CustomerResource extends Resource
@@ -38,7 +36,7 @@ class CustomerResource extends Resource
                 Forms\Components\TextInput::make('phone')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextArea::make('address')
+                Forms\Components\Textarea::make('address')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -52,9 +50,9 @@ class CustomerResource extends Resource
                 Tables\Columns\TextColumn::make('phone'),
                 Tables\Columns\TextColumn::make('address'),
                 Tables\Columns\TextColumn::make('created_at')
-                ->dateTime(),
-            Tables\Columns\TextColumn::make('updated_at')
-                ->dateTime(),
+                    ->dateTime(),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime(),
             ])
             ->filters([
                 //
@@ -64,15 +62,8 @@ class CustomerResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-                ExportBulkAction::make(),cd
+                ExportBulkAction::make(),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array
@@ -86,6 +77,14 @@ class CustomerResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['name'];
+        return ['name', 'phone'];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'phone' => $record->phone,
+            'address' => $record->address,
+        ];
     }
 }
